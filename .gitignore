@@ -1,0 +1,5 @@
+src/backend/__pycache__/
+src/backend/app/__init__.py
+src/backend/app/__pycache__/
+src/backend/ultralearning.db
+src/backend/venv/
