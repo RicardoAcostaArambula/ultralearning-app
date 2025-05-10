@@ -58,8 +58,15 @@ def post_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 #getting all users
 @app.get("/users", response_model=List[schemas.UserResponse])
-def read_users(db: Session = Depends(get_db)):
+def read_all_users(db: Session = Depends(get_db)):
     users = crud.get_all_users(db)
     if not users:
         raise HTTPException(status_code=404, detail="Users not found")
     return users
+
+@app.get("/users/{username}", response_model=schemas.UserResponse)
+def get_user(username: str, db: Session = Depends(get_db)):
+    user = crud.get_user(db, username)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
