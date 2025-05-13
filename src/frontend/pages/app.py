@@ -6,7 +6,6 @@ API_URL = "http://127.0.0.1:8000"
 if 'logged' not in st.session_state or not st.session_state['logged']:
     st.switch_page('login.py')
 st.sidebar.page_link('pages/app.py', label='Home')
-
 st.title("Welcome to Ultralearning!")
 col1, col2 = st.columns(2, border=True)
 with col1:

@@ -35,11 +35,10 @@ def create_project(project: schemas.ProjectCreate, db: Session = Depends(get_db)
     except Exception as e:
         print("General Exception:", e)
         raise HTTPException(status_code=500, detail=str(e))
-
 #fectching one project
-@app.get("/projects/{project_id}", response_model=schemas.ProjectResponse)
-def read_project(project_id: int, db: Session = Depends(get_db)):
-    project = crud.get_project(db, project_id)
+@app.get("/projects/{project_name}", response_model=schemas.ProjectResponse)
+def read_project_by_name(project_name: str, db: Session = Depends(get_db)):
+    project = crud.get_project(db, project_name)
     if not project: 
         raise HTTPException(status_code=404, detail="Project not found")
     return project
@@ -50,10 +49,10 @@ def read_projects(user_id: int, db: Session = Depends(get_db)):
     if not projects:
         raise HTTPException(status_code=404, detail="Projects not found")
     return projects
-
 #posting a new user
 @app.post("/users", response_model=schemas.UserResponse)
 def post_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    #may use a try to catch in case user is not created
     return crud.create_user(db, user)
 
 #getting all users

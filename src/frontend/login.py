@@ -7,11 +7,13 @@ with st.container():
     st.header("Welcome to Ultralearning!")
     username =  st.text_input("Username")
     password = st.text_input("Password", type= "password")
-    col1, col2 = st.columns(2, border=True)
+    col1, col2 = st.columns(2) 
     with col1:
-        log_in = st.button("Log in")
+        log_in = st.button("Log in", type="primary")
     with col2:
         create_account = st.button("Create Account")
+        if create_account:
+            st.switch_page("pages/create_account.py")
     if log_in and (username == "" or password == ""):
         st.error("Please enter your username and password.")
     elif log_in:
@@ -21,7 +23,9 @@ with st.container():
             if password == user['password']:
                 #sucess move to homepage
                 st.session_state['logged'] = True
-                st.switch_page("pages/app.py")
+                st.session_state['username'] = user['username']
+                st.session_state['id'] = user['id']
+                st.switch_page("pages/menu.py")
             else:
                 #prompt user to try again 
                 st.error("Wrong password, please try again.")
