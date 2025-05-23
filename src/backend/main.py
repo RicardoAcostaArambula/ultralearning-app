@@ -37,8 +37,8 @@ def create_project(project: schemas.ProjectCreate, db: Session = Depends(get_db)
         raise HTTPException(status_code=500, detail=str(e))
 #fectching one project
 @app.get("/projects/{project_name}", response_model=schemas.ProjectResponse)
-def read_project_by_name(project_name: str, db: Session = Depends(get_db)):
-    project = crud.get_project(db, project_name)
+def read_project_by_name(project_name: str, user_id: int, db: Session = Depends(get_db)):
+    project = crud.get_project(db, project_name, user_id)
     if not project: 
         raise HTTPException(status_code=404, detail="Project not found")
     return project
